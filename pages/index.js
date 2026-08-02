@@ -28,6 +28,11 @@ export default function Home() {
     loadKeys();
   }, []);
 
+  const logout = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    window.location.assign("/login");
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -114,9 +119,9 @@ export default function Home() {
               </code>
             </p>
             <p className="text-slate-400 text-sm mt-1">
-              Script JS được phục vụ tại:{" "}
+              API xác thực Auto Scene Alternator:{" "}
               <code className="bg-slate-900 px-2 py-1 rounded text-xs">
-                /minimax/script.js
+                /api/license/validate
               </code>
             </p>
           </div>
@@ -125,6 +130,12 @@ export default function Home() {
             className="inline-flex items-center gap-2 rounded-full bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400 transition"
           >
             🔄 Reload
+          </button>
+          <button
+            onClick={logout}
+            className="inline-flex items-center gap-2 rounded-full bg-slate-700 px-4 py-2 text-sm font-semibold text-slate-100 hover:bg-slate-600 transition"
+          >
+            Đăng xuất
           </button>
         </header>
 
@@ -144,7 +155,7 @@ export default function Home() {
                   value={form.key}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-emerald-400"
-                  placeholder="Dán CPU KEY"
+                  placeholder="ASE-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
                 />
               </div>
               <div>
@@ -206,15 +217,12 @@ export default function Home() {
 
             <div className="mt-5 border-t border-slate-800 pt-4 text-xs text-slate-500 space-y-1">
               <p>
-                • Tool Python sẽ gọi <code>/api/keys</code> (GET) và nhận về
-                mảng các object{" "}
-                <code>{"{ key, time, name }"}</code>.
+                • Tool desktop chỉ gửi một CPU KEY đã băm tới{" "}
+                <code>/api/license/validate</code> bằng POST; không tải danh sách key.
               </p>
-              <p>• Không dùng CSV nữa, chỉ JSON.</p>
               <p>
-                • File <code>script.js</code> được đặt tại{" "}
-                <code>public/minimax/script.js</code> để tool load bằng URL{" "}
-                <code>http://localhost:3000//minimax/script.js</code>.
+                • Ngày hết hạn dùng định dạng <code>dd/mm/yyyy</code> và còn hiệu lực
+                đến hết ngày theo múi giờ Việt Nam.
               </p>
             </div>
           </section>

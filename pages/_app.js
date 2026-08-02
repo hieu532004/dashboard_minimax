@@ -9,48 +9,40 @@ export default function MyApp({ Component, pageProps }) {
   const [authorized, setAuthorized] = useState(false);
 
   useEffect(() => {
-    const checkAuth = (url) => {
-      const path = url.split("?")[0];
-
-      // Trang public (login) thì không check
-      if (PUBLIC_PATHS.includes(path)) {
-        setAuthorized(true);
+    let cancelled = false;
+    const checkAuth = async () => {
+      if (PUBLIC_PATHS.includes(router.pathname)) {
+        if (!cancelled) setAuthorized(true);
         return;
       }
-
-      if (typeof window === "undefined") {
-        setAuthorized(false);
-        return;
-      }
-
-      const logged = window.localStorage.getItem("mmx_logged_in") === "1";
-
-      if (!logged) {
-        setAuthorized(false);
-        router.replace("/login");
-      } else {
+      try {
+        const response = await fetch("/api/auth/session", { cache: "no-store" });
+        if (cancelled) return;
+        if (!response.ok) {
+          setAuthorized(false);
+          await router.replace("/login");
+          return;
+        }
         setAuthorized(true);
+      } catch {
+        if (!cancelled) {
+          setAuthorized(false);
+          await router.replace("/login");
+        }
       }
     };
-
-    // Check lần đầu khi load
-    checkAuth(router.pathname);
-
-    // Check mỗi lần đổi route
-    router.events.on("routeChangeComplete", checkAuth);
+    checkAuth();
     return () => {
-      router.events.off("routeChangeComplete", checkAuth);
+      cancelled = true;
     };
-  }, [router]);
+  }, [router, router.pathname]);
 
   if (!authorized) {
-    // Có thể hiển thị màn hình loading nhỏ
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-950 text-slate-50">
-        <div className="text-sm text-slate-400">Đang kiểm tra đăng nhập...</div>
+        <div className="text-sm text-slate-400">Đang kiểm tra đăng nhập…</div>
       </div>
     );
   }
-
   return <Component {...pageProps} />;
 }

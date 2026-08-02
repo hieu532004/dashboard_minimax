@@ -1,9 +1,14 @@
 import clientPromise from "../../lib/mongodb";
+import { authorizedUser } from "../../lib/auth.mjs";
 
 const DB_NAME = process.env.MONGODB_DB || "minimax";
 const COLLECTION_NAME = process.env.MONGODB_COLLECTION || "keys";
 
 export default async function handler(req, res) {
+  res.setHeader("Cache-Control", "no-store, max-age=0");
+  if (!authorizedUser(req)) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
   const client = await clientPromise;
   const db = client.db(DB_NAME);
   const collection = db.collection(COLLECTION_NAME);
