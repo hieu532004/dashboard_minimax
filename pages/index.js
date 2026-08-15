@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const productName = (key) => key?.startsWith("AVY-") ? "AutoVideo AI" : "Auto Scene";
+
 export default function Home() {
   const [keys, setKeys] = useState([]);
   const [form, setForm] = useState({ key: "", time: "", name: "" });
@@ -155,7 +157,7 @@ export default function Home() {
                   value={form.key}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-emerald-400"
-                  placeholder="ASE-XXXXX-XXXXX-XXXXX-XXXXX-XXXXX"
+                  placeholder="ASE-... hoặc AVY-..."
                 />
               </div>
               <div>
@@ -247,6 +249,9 @@ export default function Home() {
                       Key
                     </th>
                     <th className="px-3 py-2 text-left text-xs font-semibold text-slate-400">
+                      Sản phẩm
+                    </th>
+                    <th className="px-3 py-2 text-left text-xs font-semibold text-slate-400">
                       Hết hạn
                     </th>
                     <th className="px-3 py-2 text-left text-xs font-semibold text-slate-400">
@@ -261,7 +266,7 @@ export default function Home() {
                   {keys.length === 0 && !loading && (
                     <tr>
                       <td
-                        colSpan={5}
+                        colSpan={6}
                         className="px-3 py-4 text-center text-xs text-slate-500"
                       >
                         Chưa có key nào.
@@ -275,6 +280,9 @@ export default function Home() {
                       </td>
                       <td className="px-3 py-2 align-top font-mono text-xs break-all">
                         {k.key}
+                      </td>
+                      <td className="px-3 py-2 align-top text-xs">
+                        {productName(k.key)}
                       </td>
                       <td className="px-3 py-2 align-top text-xs">
                         {k.time}

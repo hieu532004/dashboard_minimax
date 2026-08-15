@@ -1,7 +1,7 @@
 import clientPromise from "../../../lib/mongodb";
 import {
   evaluateLicenseRecord,
-  isAutoSceneLicenseKey,
+  isSupportedLicenseKey,
   normalizeLicenseKey,
 } from "../../../lib/license.mjs";
 
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   }
 
   const key = normalizeLicenseKey(req.body?.key);
-  if (!isAutoSceneLicenseKey(key)) {
+  if (!isSupportedLicenseKey(key)) {
     return res.status(400).json({ error: "CPU KEY không hợp lệ" });
   }
 

@@ -1,5 +1,10 @@
 import clientPromise from "../../lib/mongodb";
 import { authorizedUser } from "../../lib/auth.mjs";
+import {
+  isSupportedLicenseKey,
+  normalizeLicenseKey,
+  parseExpiryDate,
+} from "../../lib/license.mjs";
 
 const DB_NAME = process.env.MONGODB_DB || "minimax";
 const COLLECTION_NAME = process.env.MONGODB_COLLECTION || "keys";
@@ -36,7 +41,15 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "key và time là bắt buộc" });
       }
 
-      const doc = { key: String(key).trim().toUpperCase(), time: String(time).trim(), name: name ? String(name).trim() : "" };
+      const normalizedKey = normalizeLicenseKey(key);
+      const normalizedTime = String(time).trim();
+      if (!isSupportedLicenseKey(normalizedKey)) {
+        return res.status(400).json({ error: "CPU KEY phải bắt đầu bằng ASE hoặc AVY và đúng định dạng." });
+      }
+      if (!parseExpiryDate(normalizedTime)) {
+        return res.status(400).json({ error: "Ngày hết hạn phải đúng định dạng dd/mm/yyyy." });
+      }
+      const doc = { key: normalizedKey, time: normalizedTime, name: name ? String(name).trim() : "" };
 
       await collection.updateOne(
         { key: doc.key },
@@ -58,12 +71,20 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: "Thiếu key để cập nhật" });
       }
 
+      const normalizedKey = normalizeLicenseKey(key);
+      if (!isSupportedLicenseKey(normalizedKey)) {
+        return res.status(400).json({ error: "CPU KEY không hợp lệ." });
+      }
+      if (time !== undefined && !parseExpiryDate(String(time).trim())) {
+        return res.status(400).json({ error: "Ngày hết hạn phải đúng định dạng dd/mm/yyyy." });
+      }
+
       const update = {};
       if (time !== undefined) update.time = String(time).trim();
       if (name !== undefined) update.name = String(name).trim();
 
       await collection.updateOne(
-        { key: String(key).trim().toUpperCase() },
+        { key: normalizedKey },
         { $set: update }
       );
 

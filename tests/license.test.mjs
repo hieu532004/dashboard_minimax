@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 
 import {
   evaluateLicenseRecord,
+  isSupportedLicenseKey,
+  licenseProduct,
   normalizeLicenseKey,
   parseExpiryDate,
 } from "../lib/license.mjs";
@@ -13,6 +15,14 @@ test("normalizes a CPU key without changing its groups", () => {
     normalizeLicenseKey("  ase-abcde-fghij-klmno-pqrst-uvwxy  "),
     "ASE-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY",
   );
+});
+
+
+test("supports separate machine-key prefixes for both desktop products", () => {
+  assert.equal(isSupportedLicenseKey("ASE-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
+  assert.equal(isSupportedLicenseKey("AVY-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
+  assert.equal(isSupportedLicenseKey("BAD-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), false);
+  assert.equal(licenseProduct("AVY-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "AutoVideo AI");
 });
 
 
