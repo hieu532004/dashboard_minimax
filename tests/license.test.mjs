@@ -18,11 +18,13 @@ test("normalizes a CPU key without changing its groups", () => {
 });
 
 
-test("supports separate machine-key prefixes for both desktop products", () => {
+test("supports separate machine-key prefixes for all desktop products", () => {
   assert.equal(isSupportedLicenseKey("ASE-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
   assert.equal(isSupportedLicenseKey("AVY-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
+  assert.equal(isSupportedLicenseKey("BRP-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
   assert.equal(isSupportedLicenseKey("BAD-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), false);
   assert.equal(licenseProduct("AVY-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "AutoVideo AI");
+  assert.equal(licenseProduct("BRP-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "Beautiful Reup");
 });
 
 

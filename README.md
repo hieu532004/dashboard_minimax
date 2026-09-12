@@ -1,12 +1,12 @@
 # Key Manager (Next.js + MongoDB)
 
 Dashboard quản lý CPU KEY và endpoint xác thực license cho Auto Scene Alternator
-(`ASE-...`) và AutoVideo AI (`AVY-...`).
+(`ASE-...`), AutoVideo AI (`AVY-...`) và Beautiful Reup (`BRP-...`).
 
 ## API
 
 - `POST /api/license/validate`: endpoint công khai cho desktop app; nhận
-  `{ "key": "ASE-..." }` hoặc `{ "key": "AVY-..." }` và chỉ trả trạng thái
+  `{ "key": "ASE-..." }`, `{ "key": "AVY-..." }` hoặc `{ "key": "BRP-..." }` và chỉ trả trạng thái
   của đúng key đó.
 - `GET|POST|PUT|DELETE /api/keys`: API quản trị, bắt buộc có phiên đăng nhập
   HttpOnly hợp lệ.

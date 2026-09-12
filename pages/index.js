@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 
-const productName = (key) => key?.startsWith("AVY-") ? "AutoVideo AI" : "Auto Scene";
+  const productName = (key) => key?.startsWith("AVY-")
+    ? "AutoVideo AI"
+    : key?.startsWith("BRP-") ? "Beautiful Reup" : "Auto Scene";
 
 export default function Home() {
   const [keys, setKeys] = useState([]);
@@ -157,7 +159,7 @@ export default function Home() {
                   value={form.key}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-emerald-400"
-                  placeholder="ASE-... hoặc AVY-..."
+                    placeholder="ASE-..., AVY-... hoặc BRP-..."
                 />
               </div>
               <div>
