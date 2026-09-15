@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 
 import {
   evaluateLicenseRecord,
-  isLegacyDesktopLicenseKey,
   isSupportedLicenseKey,
   licenseProduct,
   normalizeLicenseKey,
@@ -28,8 +27,6 @@ test("supports separate machine-key prefixes for all desktop products", () => {
   assert.equal(licenseProduct("AVY-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "AutoVideo AI");
   assert.equal(licenseProduct("BRP-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "Beautiful Reup");
   assert.equal(licenseProduct("ELB-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), "TH Elevenlab studio");
-  assert.equal(isLegacyDesktopLicenseKey("ASE-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), true);
-  assert.equal(isLegacyDesktopLicenseKey("ELB-ABCDE-FGHIJ-KLMNO-PQRST-UVWXY"), false);
 });
 
 

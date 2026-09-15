@@ -129,12 +129,6 @@ export default function Home() {
                 /api/license/validate
               </code>
             </p>
-            <p className="text-slate-400 text-sm mt-1">
-              API kích hoạt TH Elevenlab studio:{" "}
-              <code className="bg-slate-900 px-2 py-1 rounded text-xs">
-                /api/license/elevenlab
-              </code>
-            </p>
           </div>
           <button
             onClick={loadKeys}
@@ -232,8 +226,8 @@ export default function Home() {
                 <code>/api/license/validate</code> bằng POST; không tải danh sách key.
               </p>
               <p>
-                • TH Elevenlab studio gửi mã <code>ELB-...</code> và nonce tới{" "}
-                <code>/api/license/elevenlab</code>; server chỉ trả token ký khi key còn hạn.
+                • TH Elevenlab studio gửi mã máy <code>ELB-...</code> tới{" "}
+                <code>/api/license/validate</code>; tool chỉ mở khóa khi key còn hạn.
               </p>
               <p>
                 • Ngày hết hạn dùng định dạng <code>dd/mm/yyyy</code> và còn hiệu lực

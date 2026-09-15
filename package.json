@@ -6,8 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "node --test tests/*.test.mjs",
-    "license:keypair": "node scripts/generate-elevenlab-keypair.mjs"
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "autoprefixer": "10.4.16",
