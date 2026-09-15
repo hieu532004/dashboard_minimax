@@ -44,7 +44,7 @@ export default async function handler(req, res) {
       const normalizedKey = normalizeLicenseKey(key);
       const normalizedTime = String(time).trim();
       if (!isSupportedLicenseKey(normalizedKey)) {
-        return res.status(400).json({ error: "CPU KEY phải bắt đầu bằng ASE, AVY hoặc BRP và đúng định dạng." });
+        return res.status(400).json({ error: "CPU KEY phải bắt đầu bằng ASE, AVY, BRP hoặc ELB và đúng định dạng." });
       }
       if (!parseExpiryDate(normalizedTime)) {
         return res.status(400).json({ error: "Ngày hết hạn phải đúng định dạng dd/mm/yyyy." });

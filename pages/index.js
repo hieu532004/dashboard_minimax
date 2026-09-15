@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 
   const productName = (key) => key?.startsWith("AVY-")
     ? "AutoVideo AI"
-    : key?.startsWith("BRP-") ? "Beautiful Reup" : "Auto Scene";
+    : key?.startsWith("BRP-") ? "Beautiful Reup"
+    : key?.startsWith("ELB-") ? "TH Elevenlab studio" : "Auto Scene";
 
 export default function Home() {
   const [keys, setKeys] = useState([]);
@@ -128,6 +129,12 @@ export default function Home() {
                 /api/license/validate
               </code>
             </p>
+            <p className="text-slate-400 text-sm mt-1">
+              API kích hoạt TH Elevenlab studio:{" "}
+              <code className="bg-slate-900 px-2 py-1 rounded text-xs">
+                /api/license/elevenlab
+              </code>
+            </p>
           </div>
           <button
             onClick={loadKeys}
@@ -159,7 +166,7 @@ export default function Home() {
                   value={form.key}
                   onChange={handleChange}
                   className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm outline-none focus:border-emerald-400"
-                    placeholder="ASE-..., AVY-... hoặc BRP-..."
+                    placeholder="ASE-..., AVY-..., BRP-... hoặc ELB-..."
                 />
               </div>
               <div>
@@ -223,6 +230,10 @@ export default function Home() {
               <p>
                 • Tool desktop chỉ gửi một CPU KEY đã băm tới{" "}
                 <code>/api/license/validate</code> bằng POST; không tải danh sách key.
+              </p>
+              <p>
+                • TH Elevenlab studio gửi mã <code>ELB-...</code> và nonce tới{" "}
+                <code>/api/license/elevenlab</code>; server chỉ trả token ký khi key còn hạn.
               </p>
               <p>
                 • Ngày hết hạn dùng định dạng <code>dd/mm/yyyy</code> và còn hiệu lực
